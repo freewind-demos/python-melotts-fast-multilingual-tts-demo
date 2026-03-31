@@ -1,0 +1,6 @@
+# Python 3.10 / 3.11（勿用 3.14，无 PyTorch wheel）
+numba==0.59.1
+python-crfsuite==0.9.10
+melotts @ git+https://github.com/myshell-ai/MeloTTS.git
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0

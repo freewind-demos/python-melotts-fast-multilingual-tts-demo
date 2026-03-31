@@ -1,0 +1,142 @@
+:root {
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #f4f4f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+h1 {
+  font-size: 1.35rem;
+  font-weight: 650;
+  margin: 0 0 0.25rem;
+}
+
+.sub {
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+  color: #52525b;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+}
+
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3f3f46;
+  margin-bottom: 0.35rem;
+}
+
+.row {
+  margin-bottom: 1rem;
+}
+
+.speaker-hint {
+  margin: -0.5rem 0 0.75rem;
+  font-size: 0.78rem;
+  color: #71717a;
+  line-height: 1.35;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.checkbox-row label {
+  margin: 0;
+  font-weight: 500;
+}
+
+.checkbox-row input {
+  width: auto;
+}
+
+select,
+textarea,
+input[type="number"] {
+  width: 100%;
+  font: inherit;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid #d4d4d8;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #18181b;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: #e4e4e7;
+  color: #18181b;
+}
+
+.status {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #52525b;
+  min-height: 1.25em;
+}
+
+.status.error {
+  color: #b91c1c;
+}
+
+audio {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #71717a;
+  margin-top: 1.25rem;
+}

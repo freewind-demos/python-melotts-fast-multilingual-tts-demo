@@ -1,1 +1,0 @@
-melotts @ git+https://github.com/myshell-ai/MeloTTS.git

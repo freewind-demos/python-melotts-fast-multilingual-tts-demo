@@ -1,0 +1,19 @@
+{
+  "name": "melotts-demo-web",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "predev": "sh scripts/predev.sh",
+    "dev": "pnpm run predev && concurrently -k -n api,web -c magenta,blue \"pnpm run server\" \"node scripts/wait-api.mjs && vite --host --open\"",
+    "dev:web": "vite --host --open",
+    "server": "sh server/run-dev.sh",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "~5.8.3",
+    "vite": "^6.2.4"
+  }
+}

@@ -1,5 +1,19 @@
 .venv/
 venv/
+server/.venv/
+node_modules/
+dist/
 __pycache__/
 *.wav
 *.mp3
+
+# 本机下载的合成相关大文件（勿提交）
+*.pth
+*.pt
+unidic.zip
+unidic-*.zip
+# 若将 Hugging Face / 词典缓存设在仓库目录内
+hf_home/
+huggingface/
+.hfcache/
+melo-cache/
