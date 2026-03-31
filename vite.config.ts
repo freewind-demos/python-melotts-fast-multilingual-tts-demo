@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 /** 与 server 默认一致；改端口时请同步设置环境变量 MELO_PORT */
 const meloPort = process.env.MELO_PORT ?? "37861";
@@ -6,6 +7,7 @@ const meloPort = process.env.MELO_PORT ?? "37861";
 const devPort = Number.parseInt(process.env.VITE_DEV_PORT ?? "47862", 10);
 
 export default defineConfig({
+  plugins: [react()],
   server: {
     host: true,
     port: devPort,

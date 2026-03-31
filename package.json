@@ -12,8 +12,16 @@
     "preview": "vite preview --host"
   },
   "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
     "concurrently": "^9.1.2",
     "typescript": "~5.8.3",
     "vite": "^6.2.4"
+  },
+  "dependencies": {
+    "antd": "^6.3.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }
