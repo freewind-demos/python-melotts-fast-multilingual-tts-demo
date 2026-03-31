@@ -19,6 +19,8 @@ from melo.api import TTS
 from melo.download_utils import LANG_TO_HF_REPO_ID, load_or_download_config
 from pydantic import BaseModel, Field
 
+from .tts_segment_norm import tts_to_numpy_segment_rms
+
 # 首次请求 /api/voices 时会为每种语言下载 config.json（体积小，走 HF 缓存）
 _LANG_LABELS: dict[str, str] = {
     "EN": "English",
@@ -134,12 +136,9 @@ def create_app() -> FastAPI:
         loop = asyncio.get_running_loop()
 
         def _synth() -> bytes:
-            audio = tts.tts_to_file(
-                body.text,
-                speaker_id,
-                None,
-                speed=body.speed,
-                quiet=True,
+            # 与上游相同：按句推理后拼接；各句先做 RMS 对齐，减轻句间音量起伏
+            audio = tts_to_numpy_segment_rms(
+                tts, body.text, speaker_id, speed=body.speed
             )
             buf = io.BytesIO()
             sf.write(buf, audio, tts.hps.data.sampling_rate, format="WAV", subtype="PCM_16")

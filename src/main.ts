@@ -51,6 +51,13 @@ function apiUrl(path: string): string {
 const API_DOWN_HINT =
   "无法连接 API（默认代理到 127.0.0.1:37861，与 Melo API 一致）。请确认本机已用 pnpm dev 一并启动后端，或另开终端执行 pnpm run server。";
 
+/** 与 server/src/app.py SynthBody.max_length 一致 */
+const TTS_MAX_CHARS = 5000;
+
+function countChars(s: string): number {
+  return [...s].length;
+}
+
 async function fetchVoices(): Promise<VoiceBlock[]> {
   let r: Response;
   try {
@@ -142,8 +149,11 @@ function mount(): void {
       </div>
       <p id="speaker-hint" class="speaker-hint" role="note"></p>
       <div class="row">
-        <label for="text">文本</label>
-        <textarea id="text" placeholder="中文模型支持中英混读…"></textarea>
+        <div class="text-label-row">
+          <label for="text">文本</label>
+          <span id="char-count" class="char-count" aria-live="polite"></span>
+        </div>
+        <textarea id="text" placeholder="中文模型支持中英混读。"></textarea>
       </div>
       <div class="row">
         <label for="speed">语速</label>
@@ -172,6 +182,15 @@ function mount(): void {
   const player = $("#player") as HTMLAudioElement;
   const btnPreload = $("#preload") as HTMLButtonElement;
   const btnSynth = $("#synth") as HTMLButtonElement;
+  const charCountEl = $("#char-count") as HTMLSpanElement;
+
+  const refreshCharCount = (): void => {
+    const n = countChars(textEl.value);
+    charCountEl.textContent = `${n} / ${TTS_MAX_CHARS}`;
+    charCountEl.classList.toggle("char-count-over", n > TTS_MAX_CHARS);
+  };
+
+  textEl.addEventListener("input", refreshCharCount);
 
   const defaultText =
     "这是 MeloTTS 中文演示，在本机合成。\n\n支持中英混读，比如带一句 machine learning。\n\n想听英文口音时，把语言切换成 English，再点合成。";
@@ -185,6 +204,7 @@ function mount(): void {
       if (zh) langSel.value = "ZH";
       fillSpeakerSelect(langSel, spkSel);
       updateSpeakerHint(langSel);
+      refreshCharCount();
     })
     .catch((e: unknown) => {
       statusEl.textContent = e instanceof Error ? e.message : String(e);
@@ -217,6 +237,12 @@ function mount(): void {
     const text = textEl.value.trim();
     if (!text) {
       statusEl.textContent = "请输入要合成的文本。";
+      statusEl.classList.add("error");
+      btnSynth.disabled = false;
+      return;
+    }
+    if (countChars(text) > TTS_MAX_CHARS) {
+      statusEl.textContent = `单次最多 ${TTS_MAX_CHARS} 字（与后端一致），请删减后再合成。`;
       statusEl.classList.add("error");
       btnSynth.disabled = false;
       return;

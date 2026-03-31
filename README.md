@@ -43,7 +43,7 @@ source .venv/bin/activate
 python -m src
 ```
 
-可选环境变量：`MELO_DEVICE`（`cpu` / `mps` / `cuda` / 默认自动）、`MELO_HOST`、`MELO_PORT`（改 API 端口时请同时 export，以便 `vite.config.ts` 里代理读到同一端口）。前端开发端口可用 `VITE_DEV_PORT` 覆盖（默认 `47862`）。
+可选环境变量：`MELO_DEVICE`（`cpu` / `mps` / `cuda` / 默认自动）、`MELO_HOST`、`MELO_PORT`（改 API 端口时请同时 export，以便 `vite.config.ts` 里代理读到同一端口）。前端开发端口可用 `VITE_DEV_PORT` 覆盖（默认 `47862`）。合成时若觉得句间音量起伏仍偏大，可微调 **`MELO_TTS_SEGMENT_RMS`**（默认 `0.065`）。中文会在 **逗号、句号等** 处被切成多段分别推理。后端默认：**段间衔接增益**（`MELO_TTS_BRIDGE*`，可 `MELO_TTS_BRIDGE=0` 关）与 **按标点区分的停顿时长**（逗号短、句末长；`MELO_PAUSE_SMART=0` 则回退为上游固定约 50ms）。可用 **`MELO_PAUSE_MS_COMMA` / `MELO_PAUSE_MS_SENTENCE`** 等微调，**`MELO_PAUSE_SCALE`** 整体缩放。
 
 ### 前端（仓库根目录）
 
@@ -113,6 +113,10 @@ pnpm dev
 权重与缓存目录通常在用户目录下的 **`.cache/huggingface`**（或 `HF_HOME` 指定位置），体积较大。
 
 若 macOS 上 `pip install` 需从源码编译 `numba` / `python-crfsuite` 失败，`server/requirements.txt` 已尽量固定带 wheel 的版本；仍失败时可尝试 `export SDKROOT="$(xcrun --show-sdk-path)"` 后再安装。
+
+### 单次合成字数
+
+`POST /api/tts` 的正文字段当前上限为 **5000 字**（见 `server/src/app.py` 里 `SynthBody`）。前端输入框旁会显示实时字数，超出时无法合成。
 
 ## 完整讲解（中文）
 
